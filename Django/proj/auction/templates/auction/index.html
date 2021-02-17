@@ -1,0 +1,43 @@
+
+
+{% extends 'auction/main.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <h1>Login</h1>
+    <div class="d-flex flex-column w-100">
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed, please login with an account that has
+                    access.</p>
+            {% else %}
+                <p>Please login to see this page.</p>
+            {% endif %}
+        {% endif %}
+        {% for error in form.non_field_errors %}
+            <small style="color:red">
+                {{ error|escape }}
+            </small>
+        {% endfor %}
+        <form method="post" action="{% url 'auction:index' %}" class="w-50 ps-5 pe-5 ms-auto me-auto">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+
+            <div class="form-group mt-2 mb-2">
+                {{ form.email.label_tag }}
+                {{ form.email|add_class:'form-control' }}
+                {% for error in form.email.errors %}
+                    <small class="form-text" style="color:red;">{{error}}</small>
+                {% endfor %}
+            </div>
+            <div class="form-group mt-2 mb-2">
+                {{ form.password.label_tag }}
+                {{ form.password|add_class:'form-control' }}
+                {% for error in form.password.errors %}
+                    <small class="form-text" style="color:red;">{{error}}</small>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-secondary mt-4 ps-1 pe-1 w-25">Login</button>
+        </form>
+    </div>
+{% endblock %}

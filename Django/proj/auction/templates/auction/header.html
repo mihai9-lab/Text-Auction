@@ -1,0 +1,11 @@
+{% load static %}
+    <div class="inner">
+        <h3 class="masthead-brand">Back office</h3>
+        <nav class="nav nav-masthead justify-content-center">
+        {% if user.is_authenticated %}
+            <a class="nav-link">Home</a>
+            <a class="nav-link">Create Auction Text</a>
+        {% endif %}
+        </nav>
+    </div>
+
