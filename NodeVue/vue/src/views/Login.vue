@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+        <h1>Login</h1>
         <b-container>
             <div class="wrapper">
                 <b-form @submit="onSubmit">
@@ -22,6 +23,7 @@
                         ></b-form-input>
                     </b-form-group>
                     <b-button type="submit" class="my-btn cust-btn" variant="dark">Login</b-button>
+                    <div style="color: red">{{ error }}</div>
                 </b-form>
             </div>
         </b-container>
@@ -37,13 +39,21 @@ export default {
             form: {
                 email: '',
                 password: ''
-            }
+            },
+            error: ''
         };
     },
     methods: {
         onSubmit(evt) {
             evt.preventDefault();
-            this.$store.dispatch('login_user', this.form);
+            this.$store
+                .dispatch('loginUser', this.form)
+                .then(() => {
+                    this.$router.push('/home');
+                })
+                .catch((err) => {
+                    this.error = err.message;
+                });
         }
     }
 };

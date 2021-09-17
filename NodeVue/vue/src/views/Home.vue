@@ -3,20 +3,21 @@
         <h1 class="title">Latest</h1>
         <HomeText
             class="home-text-helper"
-            name="Jhon Jhon"
-            text="texty texty textytexty textytexty texty texty texty textytextytexty texty texty textytexty texty "
-        />
-        <HomeText
-            class="home-text-helper"
-            name="Jhon Jhon"
-            text="texty texty textytexty textytexty texty texty texty textytextytexty texty texty textytexty texty "
+            v-for="auction in latestBoughtAuctions"
+            :key="auction.id"
+            :auction="auction"
         />
     </b-container>
 </template>
 <script>
 import HomeText from '@/components/HomeText';
+import { mapState } from 'vuex';
 export default {
     name: 'Home',
+    mounted() {
+        this.$store.dispatch('latestBought');
+    },
+    computed: { ...mapState(['latestBoughtAuctions']) },
     components: {
         HomeText
     }
@@ -29,8 +30,8 @@ export default {
     align-items: center;
     justify-content: center;
 }
-.home-text-helper{
-    width:60%
+.home-text-helper {
+    width: 60%;
 }
 /* .title */
 </style>

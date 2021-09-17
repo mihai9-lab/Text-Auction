@@ -1,7 +1,7 @@
 <template>
     <div class="register">
-        <Header main="Register" backLink="true" />
         <b-container>
+            <h1>Register</h1>
             <div class="wrapper">
                 <b-form @submit="onSubmit">
                     <b-form-group label-for="input-email">
@@ -31,16 +31,17 @@
                             placeholder="Password"
                         ></b-form-input>
                     </b-form-group>
-                    <b-form-group label-for="input-cpassword">
+                    <b-form-group label-for="input-confirmationPassword">
                         <b-form-input
-                            id="input-cpassword"
-                            v-model="form.cpassword"
+                            id="input-confirmationPassword"
+                            v-model="form.confirmationPassword"
                             type="password"
                             required
                             placeholder="Confirm password"
                         ></b-form-input>
                     </b-form-group>
                     <b-button type="submit" class="my-btn cust-btn" variant="dark">Register</b-button>
+                    <div style="color: red">{{ error }}</div>
                 </b-form>
             </div>
         </b-container>
@@ -57,14 +58,22 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                cpassword: ''
-            }
+                confirmationPassword: ''
+            },
+            error: ''
         };
     },
     methods: {
         onSubmit(evt) {
             evt.preventDefault();
-            this.$store.dispatch('register_user', this.form);
+            this.$store
+                .dispatch('registerUser', this.form)
+                .then(() => {
+                    this.$router.push('/login');
+                })
+                .catch((err) => {
+                    this.error = err.message;
+                });
         }
     }
 };

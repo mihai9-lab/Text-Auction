@@ -16,29 +16,57 @@
                 <div v-for="(value, index) in values" :key="index">{{ value }}</div>
             </div>
         </div>
-        <b-button variant="dark" class="my-btn confirm-button">Confirm Selection</b-button>
+        <b-button v-if="!userHasReacted" variant="dark" class="my-btn confirm-button" @click="onClick"
+            >Confirm Selection</b-button
+        >
     </div>
 </template>
 <script>
 export default {
     name: 'HomeTextReaction',
-    props: ['reactionDisabled'],
+    props: ['userHasReacted', 'userReaction', 'reactions', 'auctionId'],
     components: {},
-    data() {
-        let disabled = false;
-        if (this.reactionDisabled) {
-            disabled = true;
+    watch: {
+        $props: {
+            handler() {
+                if (this.userHasReacted) {
+                    this.options.forEach((option) => {
+                        if (option.value !== this.userReaction) {
+                            option.disabled = true;
+                        }
+                    });
+                    this.selected = this.userReaction;
+                }
+                this.options.forEach((option, i) => {
+                    let count = this.reactions[option.value];
+                    if (count === undefined) {
+                        count = 0;
+                    }
+                    this.values[i] = count;
+                });
+            },
+            immediate: true,
+            deep: true
         }
+    },
+    data() {
         return {
-            selected: 'radio2',
+            selected: '',
             options: [
-                { text: '👍', value: 'radio1', disabled: disabled },
-                { text: '👎', value: 'radio2', disabled: disabled },
-                { text: '😍', value: 'radio3', disabled: disabled },
-                { text: '💩', value: 'radio4', disabled: disabled }
+                { text: '👍', value: 'like', disabled: false },
+                { text: '👎', value: 'dislike', disabled: false },
+                { text: '😍', value: 'love', disabled: false },
+                { text: '💩', value: 'poop', disabled: false }
             ],
-            values: [1, 1, 1, 1]
+            values: [0, 0, 0, 0]
         };
+    },
+    methods: {
+        onClick() {
+            this.$store.dispatch('auctionReact', { auctionId: this.auctionId, type: this.selected }).then(() => {
+                this.$store.dispatch('latestBought');
+            });
+        }
     }
 };
 </script>
@@ -62,5 +90,4 @@ export default {
     display: flex;
     justify-content: space-around;
 }
-
 </style>

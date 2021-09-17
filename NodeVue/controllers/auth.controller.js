@@ -23,7 +23,7 @@ const loginUser = async (req, res, next) => {
     res.cookie('auction-secret', JSON.stringify(jwt), {
         maxAge: new Date(Date.now() + 1000 * 60 * 60 * 24 * 10)
     });
-    res.status(200).send();
+    res.status(200).json({ token: jwt });
 };
 const registerUser = async (req, res, next) => {
     let validation = await registerValidate.validateAsync(req.body).catch((err) => err);
@@ -36,6 +36,14 @@ const registerUser = async (req, res, next) => {
                 return val.message;
             })
         );
+    }
+    const userExists = await models.user.findOne({
+        where: {
+            email: validation.email
+        }
+    });
+    if (userExists !== null) {
+        return res.status(400).json(['User already exists']);
     }
     let user = req.body;
     delete user.confirmationPassword;

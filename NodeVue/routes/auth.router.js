@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
-
-
-
+const auctionController = require('../controllers/auction.controller');
+const userController = require('../controllers/user.controller');
+const userMiddleware = require('../middleware/user.middleware');
+router.use(userMiddleware);
+router.get('/auctions', auctionController.allAuctions);
+router.get('/auctions/latest', auctionController.latestBoughtAuctions);
+router.get('/auctions/user', auctionController.userAuctions);
+router.put('/auctions/react', auctionController.doReaction);
+router.post('/auctions/buy', auctionController.buyAuction);
+router.get('/user/tokens', userController.tokenCount);
+router.get('/user/profile', auctionController.userProfile);
 module.exports = router;

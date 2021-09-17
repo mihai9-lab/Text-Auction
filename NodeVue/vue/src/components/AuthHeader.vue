@@ -10,12 +10,13 @@
                         <b-nav-item to="/auction">Auction</b-nav-item>
                     </b-navbar-nav>
                     <b-navbar-nav class="ml-auto">
+                        <b-nav-text>Tokens: {{ tokenCount }}</b-nav-text>
                         <b-nav-item-dropdown right>
                             <template #button-content>
                                 <em>User</em>
                             </template>
                             <b-dropdown-item href="/profile">Profile</b-dropdown-item>
-                            <b-dropdown-item href="/logout">Logout</b-dropdown-item>
+                            <b-dropdown-item @click="logout">Logout</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>
@@ -24,8 +25,21 @@
     </header>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
-    components: {}
+    components: {},
+    mounted() {
+        this.$store.dispatch('getTokenCount');
+    },
+    computed: {
+        ...mapState(['tokenCount'])
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('logoutUser');
+            window.location.href = '/';
+        }
+    }
 };
 </script>
 <style>

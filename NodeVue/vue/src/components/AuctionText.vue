@@ -6,15 +6,36 @@
         <b-row class="auction-buy-wrap">
             <b-col cols="3" class="auction-buy-price"> Tokens: {{ price }} </b-col>
             <b-col cols="4">
-                <b-button variant="dark" class="my-btn confirm-button">Buy</b-button>
+                <b-button variant="dark" class="my-btn confirm-button" @click="onClick">Buy</b-button>
             </b-col>
+        </b-row>
+        <b-row class="w-100 ml-3">
+            <span style="color: red">{{ error }}</span>
         </b-row>
     </div>
 </template>
 <script>
 export default {
     name: 'AuctionText',
-    props: ['text', 'price']
+    props: ['text', 'price', 'id'],
+    data() {
+        return {
+            error: ''
+        };
+    },
+    methods: {
+        onClick() {
+            this.$store
+                .dispatch('buyAuction', this.id)
+                .then(() => {
+                    this.$store.dispatch('getTokenCount');
+                    this.$store.dispatch('allAuctions');
+                })
+                .catch((err) => {
+                    this.error = err.message;
+                });
+        }
+    }
 };
 </script>
 <style scoped>

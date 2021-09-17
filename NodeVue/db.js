@@ -15,8 +15,16 @@ const initialize = async () => {
     models.user = require('./models/user.model')(db);
     models.text = require('./models/text.model')(db);
     models.reaction = require('./models/reaction.model')(db);
+    models.text.belongsTo(models.user, {
+        foreignKey: {
+            allowNull: true
+        }
+    });
     models.user.hasMany(models.text, {
-        onDelete: 'SET NULL'
+        onDelete: 'SET NULL',
+        foreignKey: {
+            allowNull: true
+        }
     });
     models.user.hasMany(models.reaction, {
         onDelete: 'SET NULL'

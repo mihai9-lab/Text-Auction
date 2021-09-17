@@ -4,6 +4,8 @@ import Landing from '../views/Landing';
 import Login from '../views/Login';
 import Register from '../views/Register';
 import Home from '../views/Home';
+import User from '../views/User';
+import Profile from '../views/Profile.vue';
 import Header from '../components/Header';
 import AuthHeader from '../components/AuthHeader';
 import Auction from '../views/Auction';
@@ -47,6 +49,22 @@ const routes = [
         name: 'auction',
         components: {
             default: Auction,
+            header: AuthHeader
+        }
+    },
+    {
+        path: '/user/:id',
+        name: 'userAuction',
+        components: {
+            default: User,
+            header: AuthHeader
+        }
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        components: {
+            default: Profile,
             header: AuthHeader
         }
     }

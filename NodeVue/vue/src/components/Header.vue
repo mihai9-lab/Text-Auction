@@ -11,14 +11,6 @@
                         <b-nav-item to="/login">Login</b-nav-item>
                         <b-nav-item to="/register">Register</b-nav-item>
                     </b-nav-form>
-
-                    <b-nav-item-dropdown right>
-                        <template #button-content>
-                            <em>User</em>
-                        </template>
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-                    </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-container>
         </b-navbar>

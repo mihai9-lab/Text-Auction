@@ -1,19 +1,26 @@
 <template>
     <div class="home-text">
         <b-row class="home-text-title">
-            <b-col class="home-text-name" cols="12">{{ name }}</b-col>
+            <b-col class="home-text-name" cols="12">
+                <router-link :to="`/user/${auction.User.id}`">{{ auction.User.name }}</router-link>
+            </b-col>
         </b-row>
         <b-row class="home-text-text-wrap">
-            <b-col cols="12" class="home-text-text">{{ text }}</b-col>
+            <b-col cols="12" class="home-text-text">{{ auction.text }}</b-col>
         </b-row>
-        <HomeTextReaction />
+        <HomeTextReaction
+            :userHasReacted="auction.userHasReacted"
+            :userReaction="auction.reactedWith"
+            :reactions="auction.reactions"
+            :auctionId="auction.id"
+        />
     </div>
 </template>
 <script>
 import HomeTextReaction from '@/components/HomeTextReaction';
 export default {
     name: 'HomeText',
-    props: ['name', 'text'],
+    props: ['auction'],
     components: { HomeTextReaction }
 };
 </script>

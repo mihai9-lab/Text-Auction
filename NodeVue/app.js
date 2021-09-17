@@ -6,7 +6,8 @@ const logger = require('morgan');
 const router = require('./routes');
 const cors = require('cors');
 const app = express();
-
+const CronJob = require('cron').CronJob;
+const { models } = require('./db');
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -26,5 +27,10 @@ app.use(function (err, req, res, next) {
 
     res.status(err.status || 500).send();
 });
-
+new CronJob('0 0 0 * * *', async () => {
+    const users = await models.user.findAll();
+    users.forEach((user) => {
+        user.increment({ tokens: 1000 });
+    });
+}).start();
 module.exports = app;
