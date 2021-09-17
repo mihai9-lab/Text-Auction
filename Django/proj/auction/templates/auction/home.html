@@ -1,0 +1,59 @@
+{% extends 'auction/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="grid-main">
+    <div class="g-container">
+      <div class="g-container-title">Total Texts</div>
+      <div class="g-container-value">{{total_texts}}</div>
+    </div>
+    <div class="g-container">
+      <div class="g-container-title">Sold Texts</div>
+      <div class="g-container-value">{{bought_texts}}</div>
+    </div>
+    <div class="g-container">
+      <div class="g-container-title">Auctioned Texts</div>
+      <div class="g-container-value">{{auctioned_texts}}</div>
+    </div>
+    <div class="g-container">
+      <div class="g-container-title">Total Tokens Made</div>
+      <div class="g-container-value">{{total_tokens}}</div>
+    </div>
+    <div class="g-container">
+      <div class="g-container-title">Total Tokens Held</div>
+      <div class="g-container-value">{{total_tokens_held}}</div>
+    </div>
+    <div class="g-container">
+      <div class="g-container-title">Total Tokens Spent</div>
+      <div class="g-container-value">{{total_tokens_spent}}</div>
+    </div>
+  </div>
+  <table id="datatable">
+    <thead>
+      <tr>
+        <th>Text ID</th>
+        <th>User Name</th>
+        <th>User Email</th>
+        <th>Text Price</th>
+        <th>Reaction Count</th>
+        <th>Reactions Earned</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+      <tr>
+        <td>{{row.textId}}</td>
+        <td>{{row.userName}}</td>
+        <td>{{row.userEmail}}</td>
+        <td>{{row.price}}</td>
+        <td>{{row.reactions}}</td>
+        <td>{{row.earned}}</td>
+        <td>{{row.profit}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

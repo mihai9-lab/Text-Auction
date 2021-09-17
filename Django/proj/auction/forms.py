@@ -1,3 +1,5 @@
+from django.db.models import fields
+from .models import Texts
 from django import forms
 
 
@@ -26,3 +28,9 @@ from django import forms
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Email', required=True)
     password = forms.CharField(widget=forms.PasswordInput(), required=True)
+
+
+class AuctionTextForm(forms.ModelForm):
+    class Meta:
+        model = Texts
+        fields = ['text', 'price']

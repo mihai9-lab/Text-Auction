@@ -25,8 +25,8 @@ class Texts(models.Model):
     id = models.BigAutoField(primary_key=True)
     text = models.TextField()
     price = models.BigIntegerField()
-    createdat = models.DateTimeField(db_column='createdAt')  # Field name made lowercase.
-    updatedat = models.DateTimeField(db_column='updatedAt')  # Field name made lowercase.
+    createdat = models.DateTimeField(db_column='createdAt',auto_now=True)  # Field name made lowercase.
+    updatedat = models.DateTimeField(db_column='updatedAt',auto_now=True)  # Field name made lowercase.
     userid = models.ForeignKey('Users', models.DO_NOTHING, db_column='UserId', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:

@@ -1,0 +1,21 @@
+.grid-main{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  margin-bottom: 20px;
+}
+.g-container{
+  padding:10px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: cadetblue;
+  border-radius: 3px;
+}
+.g-container-title{
+  font-size: 20px;
+}
+.g-container-value{
+  font-size: 32px;
+}
